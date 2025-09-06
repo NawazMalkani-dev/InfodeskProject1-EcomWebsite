@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SoundWave - Spotify-like Music Player</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #1e3a8a, #7c3aed);
+        color: white;
+      }
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #374151;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #6b7280;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #9ca3af;
+      }
+      /* Custom range sliders */
+      input[type="range"] {
+        -webkit-appearance: none;
+        height: 4px;
+        background: #4a5568;
+        outline: none;
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 12px;
+        height: 12px;
+        background: #68d391;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      /* Player controls animation */
+      .control-btn {
+        transition: transform 0.2s ease;
+      }
+      .control-btn:hover {
+        transform: scale(1.05);
+      }
+      /* Sidebar hover effects */
+      .sidebar-item {
+        transition: background-color 0.3s ease;
+      }
+      .sidebar-item:hover {
+        background-color: #4b5563;
+      }
+    </style>
+  </head>
+  <body class="h-screen flex">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 p-4 flex flex-col">
+      <div class="mb-8">
+        <h1 class="text-2xl font-bold text-green-400 cursor-pointer">
+          SoundWave
+        </h1>
+      </div>
+
+      <nav class="mb-6">
+        <ul class="space-y-2">
+          <li
+            id="home-tab"
+            class="sidebar-item p-3 rounded text-white cursor-pointer flex items-center"
+            data-tab="home">
+            <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M10.707 2.293a1 1 0 00-1.414 0l-5 5a1 1 0 001.414 1.414L9 5.414V17a1 1 0 102 0V5.414l3.293 3.293a1 1 0 001.414-1.414l-5-5z" />
+            </svg>
+            Home
+          </li>
+          <li
+            id="upload-tab"
+            class="sidebar-item p-3 rounded text-gray-400 cursor-pointer hover:text-white hover:bg-gray-800 flex items-center"
+            data-tab="upload">
+            <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
+            </svg>
+            Upload Local Music
+          </li>
+          <li
+            id="playlists-tab"
+            class="sidebar-item p-3 rounded text-gray-400 cursor-pointer hover:text-white hover:bg-gray-800 flex items-center"
+            data-tab="playlists">
+            <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Your Playlists
+          </li>
+        </ul>
+      </nav>
+
+      <div class="flex-1 overflow-y-auto">
+        <h3 class="text-sm font-semibold text-gray-400 mb-3">
+          Recent Playlists
+        </h3>
+        <ul id="playlists-list" class="space-y-1">
+          <li
+            class="sidebar-item p-2 rounded text-gray-400 cursor-pointer hover:text-white hover:bg-gray-800">
+            Recently Played
+          </li>
+          <li
+            class="sidebar-item p-2 rounded text-gray-400 cursor-pointer hover:text-white hover:bg-gray-800">
+            Liked Songs
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 bg-gray-800 p-6 flex flex-col overflow-hidden">
+      <!-- Header -->
+      <header class="mb-6">
+        <h2 class="text-3xl font-bold">Welcome to SoundWave</h2>
+        <div class="mt-4">
+          <button
+            id="open-file-dialog"
+            class="bg-green-500 text-black px-4 py-2 rounded-full font-semibold hover:bg-green-400 control-btn">
+            <svg
+              class="w-5 h-5 inline mr-2"
+              fill="currentColor"
+              viewBox="0 0 20 20">
+              <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z" />
+              <path
+                fill-rule="evenodd"
+                d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"
+                clip-rule="evenodd" />
+            </svg>
+            Add Music Files
+          </button>
+          <input
+            id="file-input"
+            type="file"
+            accept="audio/*"
+            multiple
+            style="display: none" />
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div id="content" class="flex-1 overflow-y-auto">
+        <!-- Home Tab -->
+        <div id="home-content" class="content-tab">
+          <div class="mb-8">
+            <h3 class="text-2xl font-bold mb-4">Made for You</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div
+                class="bg-gray-700 p-4 rounded-lg hover:bg-gray-600 transition cursor-pointer">
+                <img
+                  src="assets/images/discover_music.webp"
+                  alt="Vibrant music for Gamers"
+                  class="w-full h-48 object-cover rounded mb-3" />
+                <h3 class="font-semibold">Discover Weekly</h3>
+                <p class="text-gray-400">Your weekly fresh music</p>
+              </div>
+              <div
+                class="bg-gray-700 p-4 rounded-lg hover:bg-gray-600 transition cursor-pointer">
+                <img
+                  src="https://placehold.co/400x400/red/white"
+                  alt="Energetic red-themed album cover with guitar strings and sound waves visualized as flames, dynamic composition with bold reds and oranges, rock music genre inspiration"
+                  class="w-full h-48 object-cover rounded mb-3" />
+                <h3 class="font-semibold">Release Radar</h3>
+                <p class="text-gray-400">
+                  Catch all the latest music from artists you love
+                </p>
+              </div>
+              <div
+                class="bg-gray-700 p-4 rounded-lg hover:bg-gray-600 transition cursor-pointer">
+                <img
+                  src="assets/images/Dailymix_music.jpg"
+                  alt="Calming green album cover with flowing waves and floating musical instruments, serene ocean theme with soft greens and blues, acoustic music feel"
+                  class="w-full h-48 object-cover rounded mb-3" />
+                <h3 class="font-semibold">Daily Mix 1</h3>
+                <p class="text-gray-400">Made for you by SoundWave</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-2xl font-bold mb-4">Recently Played</h3>
+            <div id="recently-played-list" class="space-y-2">
+              <p class="text-gray-400">
+                No recent songs. Add some music files!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Tab -->
+        <div id="upload-content" class="content-tab hidden">
+          <h2 class="text-2xl font-bold mb-6">Upload Your Music</h2>
+          <div class="bg-gray-700 p-6 rounded-lg text-center">
+            <svg
+              class="w-16 h-16 mx-auto mb-4 text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20">
+              <path
+                d="M4 16a2 2 0 01-2-2V4a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 01-2 2H4zm0-2h8V4H4v10zm2-8h4v2H6V6z" />
+            </svg>
+            <h3 class="text-lg font-semibold mb-2">Select Music Files</h3>
+            <p class="text-gray-400 mb-4">
+              Choose MP3, WAV, or other audio files from your device
+            </p>
+            <button
+              onclick="document.getElementById('file-input').click()"
+              class="bg-green-500 text-black px-6 py-3 rounded-full font-semibold hover:bg-green-400 control-btn">
+              Choose Files
+            </button>
+          </div>
+          <div id="uploaded-songs-list" class="mt-6 space-y-2"></div>
+        </div>
+
+        <!-- Playlists Tab -->
+        <div id="playlists-content" class="content-tab hidden">
+          <h2 class="text-2xl font-bold mb-6">Your Playlists</h2>
+          <div id="combined-playlists-list" class="space-y-4">
+            <p class="text-gray-400">
+              Create playlists to organize your music!
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Player Controls -->
+    <div
+      id="player"
+      class="fixed bottom-0 left-0 right-0 bg-gray-900 h-24 flex items-center p-4 z-10 hidden">
+      <div class="flex items-center w-1/4">
+        <img
+          id="current-song-img"
+          src="https://placehold.co/60x60/gray/white"
+          alt="Album cover image for currently playing song, showing artistic representation of music with vibrant colors and abstract patterns"
+          class="w-16 h-16 object-cover rounded mr-4" />
+        <div>
+          <p id="current-song-title" class="font-semibold">No song playing</p>
+          <p id="current-song-artist" class="text-gray-400">Unknown</p>
+        </div>
+        <button id="like-btn" class="ml-3 text-gray-400 hover:text-green-400">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="flex-1 flex flex-col items-center">
+        <div class="flex items-center space-x-4 mb-2">
+          <button
+            id="shuffle-btn"
+            class="text-gray-400 hover:text-white control-btn">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M8 5a6 6 0 118 0v2A4 4 0 0110 7v1l-3 2V6a6 6 0 01-2-1V8l-3-2V5z" />
+            </svg>
+          </button>
+          <button
+            id="prev-btn"
+            class="text-gray-400 hover:text-white control-btn">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M8.445 14.832A1 1 0 0010 14v-2.798l5.445 3.63A1 1 0 0017 14V6a1 1 0 00-1.555-.832L10 8.798V6a1 1 0 00-1.555-.832l-6 4a1 1 0 000 1.664l6 4z" />
+            </svg>
+          </button>
+          <button
+            id="play-btn"
+            class="bg-white text-black p-3 rounded-full control-btn">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M8 5v10l8-5-8-5z" />
+            </svg>
+          </button>
+          <button
+            id="next-btn"
+            class="text-gray-400 hover:text-white control-btn">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M4.555 5.168A1 1 0 003 6v8a1 1 0 001.555.832L10 11.202V14a1 1 0 001.555.832l6-4a1 1 0 000-1.664l-6-4A1 1 0 0010 6v2.798l-5.445-3.63z" />
+            </svg>
+          </button>
+          <button
+            id="repeat-btn"
+            class="text-gray-400 hover:text-white control-btn">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M10 3a6 6 0 11-6 6v2A4 4 0 008 9V7l3 2-3 2V9a6 6 0 010-1V8a6 6 0 016 6v2A4 4 0 0116 13v-1l-3 2 3 2v-2a6 6 0 01-6-6z" />
+            </svg>
+          </button>
+        </div>
+        <div class="w-full flex items-center space-x-2 max-w-2xl">
+          <span id="current-time" class="text-xs text-gray-400">0:00</span>
+          <input
+            id="progress-bar"
+            type="range"
+            min="0"
+            max="100"
+            value="0"
+            class="flex-1" />
+          <span id="duration" class="text-xs text-gray-400">0:00</span>
+        </div>
+      </div>
+
+      <div class="w-1/4 flex items-center justify-end space-x-2">
+        <button class="text-gray-400 hover:text-white">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M7.5 3.5a.5.5 0 01.5.5v.5c0 1.5-.5 3-2.5 3s-2.5-1.5-2.5-3V4a.5.5 0 011 0v.5c0 1-.5 2-1.5 2s-1.5-1-1.5-2V4a.5.5 0 01.5-.5z" />
+          </svg>
+        </button>
+        <input
+          id="volume-slider"
+          type="range"
+          min="0"
+          max="100"
+          value="50"
+          class="w-24" />
+      </div>
+
+      <audio id="audio-player" preload="metadata"></audio>
+    </div>
+
+    <script src="js/music-player.js"></script>
+  </body>
+</html>

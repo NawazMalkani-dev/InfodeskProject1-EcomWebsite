@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SoundWave - Premium Music Experience</title>
+    <!-- Cascated Style Sheet -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <!-- Logo Style Sheet -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <nav>
+      <a href="index.html" class="logo">SoundWave</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li>
+          <a href="cart.html">
+            <span class="material-symbols-outlined">
+              shopping_cart_checkout
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="mini_tv.html">
+            <span class="material-symbols-outlined"> live_tv </span>
+          </a>
+        </li>
+        <li>
+          <a href="music.html">
+            <span class="material-symbols-outlined"> music_cast </span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- Cart -->
+    <div class="container1">
+      <h2>Your Shopping Cart</h2>
+      <table id="cart-table" aria-label="Shopping cart items">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody id="cart-body"></tbody>
+      </table>
+      <div class="empty-message" id="empty-message" style="display: none">
+        Your cart is empty.
+      </div>
+      <div class="actions">
+        <div class="total" id="total-price">Total: $0.00</div>
+        <div>
+          <button id="clear-cart">Clear Cart</button>
+          <a href="shop.html" class="continue-shopping">Continue Shopping</a>
+        </div>
+      </div>
+      <div class="proceed-to-pay">
+        <button class="cta-button">Proceed to pay</button>
+      </div>
+    </div>
+    <!-- Footer -->
+    <section class="footer" aria-label="Contact Information">
+      <div class="footer-details">
+        <a href="index.html" class="logo">SoundWave</a>
+        <div class="social-icons">
+          <a href="https://facebook.com" target="_blank"
+            ><i class="fab fa-facebook-f"></i
+          ></a>
+          <a href="https://instagram.com" target="_blank"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a href="https://twitter.com" target="_blank"
+            ><i class="fab fa-x-twitter"></i
+          ></a>
+          <a href="https://youtube.com" target="_blank"
+            ><i class="fab fa-youtube"></i
+          ></a>
+          <a href="https://linkedin.com" target="_blank"
+            ><i class="fab fa-linkedin-in"></i
+          ></a>
+        </div>
+      </div>
+      <div class="copy">
+        <p>&copy; 2025 SoundWave. All Rights Reserved.</p>
+      </div>
+    </section>
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+  </body>
+</html>

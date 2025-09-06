@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SoundWave - Premium Music Experience</title>
+    <!-- Cascated Style Sheet -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <!-- Logo Style Sheet -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <nav>
+      <a href="index.html" class="logo">SoundWave</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li>
+          <a href="cart.html">
+            <span class="material-symbols-outlined">
+              shopping_cart_checkout
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="mini_tv.html">
+            <span class="material-symbols-outlined"> live_tv </span>
+          </a>
+        </li>
+        <li>
+          <a href="music.html">
+            <span class="material-symbols-outlined"> music_cast </span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Elevate Your Sound Experience</h1>
+        <p>
+          Explore premium electronic hearing devices and cutting-edge audio
+          solutions, all backed by expert support.
+        </p>
+        <a href="music.html" class="cta-button">Start Listening Now</a>
+      </div>
+      <img
+        src="assets/images/HeroBackground.png"
+        alt="Modern audio studio with mixing console, professional headphones, and acoustic panels in a sleek dark room with blue accent lighting"
+        style="display: none"
+        onerror="document.querySelector('.hero').style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'" />
+    </section>
+    <!-- Slider -->
+    <section class="slider" aria-label="Featured electronic hearing devices">
+      <div class="slides">
+        <div class="slide" aria-hidden="false">
+          <div class="img">
+            <img
+              src="assets/images/Headphone.avif"
+              alt="Sleek modern hearing aid with Bluetooth connectivity" />
+          </div>
+          <h3>Headphones</h3>
+          <p>
+            Experience crystal-clear sound with wireless connectivity and long
+            battery life.
+          </p>
+          <a href="shop.html" class="cta-button">Shop Now</a>
+        </div>
+        <div class="slide" aria-hidden="true">
+          <div class="img">
+            <img
+              src="assets/images/Neckband.avif"
+              alt="Compact behind-the-ear hearing device with noise reduction" />
+          </div>
+          <h3>Neckband</h3>
+          <p>
+            Comfortable fit with advanced noise reduction technology for
+            everyday use.
+          </p>
+          <a href="shop.html" class="cta-button">Shop Now</a>
+        </div>
+        <div class="slide" aria-hidden="true">
+          <div class="img">
+            <img
+              src="assets/images/Airpods.avif"
+              alt="Invisible in-ear hearing device with customizable settings" />
+          </div>
+          <h3>Airpods</h3>
+          <p>
+            Discreet design with personalized sound profiles tailored to your
+            needs.
+          </p>
+          <a href="shop.html" class="cta-button">Shop Now</a>
+        </div>
+        <div class="slide" aria-hidden="true">
+          <div class="img">
+            <img
+              src="assets/images/Speakers.avif"
+              alt="Speakers with customizable settings" />
+          </div>
+          <h3>Speakers</h3>
+          <p>Discreet design with Extreme sound control for your needs.</p>
+          <a href="shop.html" class="cta-button">Shop Now</a>
+        </div>
+      </div>
+      <div class="slider-nav">
+        <button class="prev" aria-label="Previous slide">&#10094;</button>
+        <button class="next" aria-label="Next slide">&#10095;</button>
+      </div>
+      <div class="slider-dots" role="tablist" aria-label="Slide navigation">
+        <button
+          class="dot active"
+          aria-selected="true"
+          aria-controls="slide1"
+          role="tab"></button>
+        <button
+          class="dot"
+          aria-selected="false"
+          aria-controls="slide2"
+          role="tab"></button>
+        <button
+          class="dot"
+          aria-selected="false"
+          aria-controls="slide3"
+          role="tab"></button>
+        <button
+          class="dot"
+          aria-selected="false"
+          aria-controls="slide4"
+          role="tab"></button>
+      </div>
+    </section>
+    <!-- About -->
+    <section class="about" aria-label="Little about the website">
+      <div class="columns">
+        <div class="column1"></div>
+        <div class="column2">
+          <h2>About Us</h2>
+          <p>
+            At SoundWave, we specialize in high-quality electronics designed to
+            bring sound to life. From premium headphones to cutting-edge audio
+            gadgets, our products deliver exceptional auditory experiences that
+            immerse you in every beat, call, and note. Our mission is to combine
+            innovation, style, and superior sound quality, helping you enjoy
+            technology that speaks to your senses.
+          </p>
+          <a href="about.html" class="cta-button">Know More</a>
+        </div>
+      </div>
+    </section>
+    <!-- Footer -->
+    <section class="footer" aria-label="Contact Information">
+      <div class="footer-details">
+        <a href="index.html" class="logo">SoundWave</a>
+        <div class="social-icons">
+          <a href="https://facebook.com" target="_blank"
+            ><i class="fab fa-facebook-f"></i
+          ></a>
+          <a href="https://instagram.com" target="_blank"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a href="https://twitter.com" target="_blank"
+            ><i class="fab fa-x-twitter"></i
+          ></a>
+          <a href="https://youtube.com" target="_blank"
+            ><i class="fab fa-youtube"></i
+          ></a>
+          <a href="https://linkedin.com" target="_blank"
+            ><i class="fab fa-linkedin-in"></i
+          ></a>
+        </div>
+      </div>
+      <div class="copy">
+        <p>&copy; 2025 SoundWave. All Rights Reserved.</p>
+      </div>
+    </section>
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+  </body>
+</html>

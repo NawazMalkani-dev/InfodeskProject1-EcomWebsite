@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mini TV - Stream Free Shows & Movies</title>
+  <style>
+    :root {
+      --background: #0f0f0f;
+      --text-color: #eee;
+      --primary-color: #00a8e1;
+      --card-bg: #1e1e1e;
+      --border-color: #333;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--text-color);
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+    header {
+      position: fixed;
+      width: 95%;
+      z-index: 4;
+      background-color: #141414;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #ff9900;
+      text-decoration: none;
+    }
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: var(--primary-color);
+    }
+    .hero {
+      position: relative;
+      height: 80vh;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
+                  url("assets/images/movie_HeroBackgroud.png") center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .hero-content h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    .play-btn {
+      background: #ff9900;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .play-btn:hover {
+      background: #e68a00;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .category {
+      margin-bottom: 3rem;
+    }
+    .category h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--text-color);
+    }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .video-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s;
+    }
+    .video-card:hover {
+      transform: scale(1.05);
+    }
+    .video-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .video-info {
+      padding: 1rem;
+    }
+    .video-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .video-desc {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    .play-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .video-card:hover .play-overlay {
+      opacity: 1;
+    }
+    .video-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .video-modal.show {
+      display: flex;
+    }
+    .video-modal video {
+      max-width: 80%;
+      max-height: 80%;
+    }
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: red;
+      color: white;
+      border: none;
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+    .img {
+      background-color: #333;
+      color: #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      nav {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="#top" class="logo">Mini TV</a>
+    <nav>
+      <a href="#top">Home</a>
+      <a href="#series">Series</a>
+      <a href="#movies">Movies</a>
+      <a href="#kids">Kids</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="hero-content">
+      <h1>Watch Free Shows & Movies</h1>
+      <p>Enjoy unlimited content without subscriptions. Discover new stories every day.</p>
+      <a href="#series"><button class="play-btn">Play Now</button></a>
+    </div>
+  </section>
+
+  <div class="container" id="series">
+    <!-- Series Category -->
+    <div class="category">
+      <h2>Series</h2>
+      <div class="video-grid">
+        <div class="video-card" onclick="showModal('assets/video/web_series_part1_ep1-4.mp4')">
+          <img src="assets/images/web_series_poster1.jpg" alt="Thrilling fantasy show poster of Wednesday Season-2" />
+          <div class="video-info">
+            <div class="video-title">Wednesday Season-2 Part-1</div>
+            <div class="video-desc">An epic tale of magic and adventure.</div>
+          </div>
+          <div class="play-overlay">
+            <span>▶</span>
+          </div>
+        </div>
+        <div class="video-card" onclick="showModal('assets/video/web_series_part2_ep5-8.mp4')">
+          <img src="assets/images/web_series_poster1.jpg" alt="Mystery detective show of Wednesday Season-2" />
+          <div class="video-info">
+            <div class="video-title">Wednesday Season-2 Part-2</div>
+            <div class="video-desc">An epic tale of magic and adventure.</div>
+          </div>
+          <div class="play-overlay">
+            <span>▶</span>
+          </div>
+        </div>
+        <!-- Add more series as needed -->
+      </div>
+    </div>
+
+    <!-- Movies Category -->
+    <div class="category" id="movies">
+      <h2>Movies</h2>
+      <div class="video-grid">
+        <div class="video-card" onclick="showModal('assets/video/Movie1.mp4')">
+          <img src="assets/images/movie_poster1.jpg" alt="Action movie poster with hero in dynamic pose" />
+          <div class="video-info">
+            <div class="video-title">Maalik</div>
+            <div class="video-desc">High-octane fights and thrilling escapes.</div>
+          </div>
+          <div class="play-overlay">
+            <span>▶</span>
+          </div>
+        </div>
+        <div class="video-card" onclick="showModal('assets/video/Movie2.mp4')">
+          <img src="assets/images/movie_poster2.jpg" alt="Romantic comedy poster with laughing couple" />
+          <div class="video-info">
+            <div class="video-title">Raid 2</div>
+            <div class="video-desc">Best Murder Escape Plan Ever.</div>
+          </div>
+          <div class="play-overlay">
+            <span>▶</span>
+          </div>
+        </div>
+        <!-- Add more movies as needed -->
+      </div>
+    </div>
+
+    <!-- Kids Category -->
+    <div class="category" id="kids">
+      <h2>Kids</h2>
+      <div class="video-grid">
+        <div class="video-card" onclick="showModal('assets/video/kids1.mkv')">
+          <img src="assets/images/Kids1.png" alt="Animated kids show with talking animals" />
+          <div class="video-info">
+            <div class="video-title">Frozen</div>
+            <div class="video-desc">The story of Princess Anna of Arendelle, who sets off on an epic journey with Kristoff and a snowman named Olaf to find her sister.</div>
+          </div>
+          <div class="play-overlay">
+            <span>▶</span>
+          </div>
+        </div>
+        <div class="video-card" onclick="showModal('assets/video/kids2.mp4')">
+          <img src="assets/images/Kids2.png" alt="Educational kids program with numbers and letters" />
+          <div class="video-info">
+            <div class="video-title">Tangled Before Ever After</div>
+            <div class="video-desc">Disney animated musical film, loosely based on the fairy tale "Rapunzel".</div>
+          </div>
+          <div class="play-overlay">
+            <span>▶</span>
+          </div>
+        </div>
+        <!-- Add more kids content as needed -->
+      </div>
+    </div>
+  </div>
+
+ <div class="video-modal" id="video-modal" role="dialog" aria-hidden="true">
+  <video id="modal-video" controls></video>
+  <button class="close-btn" onclick="closeModal()" aria-label="Close video">X</button>
+</div>
+
+  <script>
+    function showModal(videoSrc) {
+  const modal = document.getElementById('video-modal');
+  const video = document.getElementById('modal-video');
+  video.src = videoSrc;
+  modal.classList.add('show');
+  modal.setAttribute("aria-hidden", "false");
+  video.play();
+}
+
+function closeModal() {
+  const modal = document.getElementById('video-modal');
+  const video = document.getElementById('modal-video');
+  modal.classList.remove('show');
+  modal.setAttribute("aria-hidden", "true");
+  video.pause();
+  video.src = '';
+}
+document.getElementById('video-modal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeModal();
+  }
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === "Escape") {
+    closeModal();
+  }
+});
+
+  </script>
+</body>
+</html>
+</content>
+</create_file>
